@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Postagem {
 	
@@ -32,6 +34,7 @@ public class Postagem {
 	@ManyToOne
 	private Usuario usuario;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "postagem")
 	private List<Comentario> comentarios;
 	

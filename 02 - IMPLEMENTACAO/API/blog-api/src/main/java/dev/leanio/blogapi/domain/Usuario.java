@@ -14,6 +14,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.leanio.blogapi.domain.enumeration.TipoUsuario;
 
 @Entity
@@ -43,9 +45,11 @@ public class Usuario {
 	@ManyToMany
 	private List<Permissao> permissoes;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Postagem> postagens;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Comentario> comentarios;
 
