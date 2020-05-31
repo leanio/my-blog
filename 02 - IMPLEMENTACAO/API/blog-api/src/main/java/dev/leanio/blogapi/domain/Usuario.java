@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +23,7 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@Email
 	@NotBlank
 	private String email;
 	
@@ -39,6 +42,12 @@ public class Usuario {
 	
 	@ManyToMany
 	private List<Permissao> permissoes;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Postagem> postagens;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Comentario> comentarios;
 
 	public Long getCodigo() {
 		return codigo;

@@ -26,6 +26,10 @@ public class Comentario {
 	@NotNull
 	@ManyToOne
 	private Usuario usuario;
+	
+	@NotNull
+	@ManyToOne
+	private Postagem postagem;
 
 	public Long getCodigo() {
 		return codigo;
