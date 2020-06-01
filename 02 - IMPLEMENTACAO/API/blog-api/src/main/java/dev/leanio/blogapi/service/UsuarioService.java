@@ -35,7 +35,8 @@ public class UsuarioService {
 	public Usuario atualizar(Long codigo, Usuario usuario) {
 		Usuario usuarioSalvo = buscarPeloCodigo(codigo);
 		validarAtualizacao(codigo, usuario);
-		BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo", "ativo", "senha");		
+		BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo", "ativo", "senha");	
+		
 		return usuarioRepository.save(usuarioSalvo);
 	}
 	
