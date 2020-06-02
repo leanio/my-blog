@@ -1,12 +1,11 @@
 <div class="row card" style="padding: 10px;">
-  <form class="col s12" (ngSubmit)="adicionarUsuario()" [formGroup]="formulario">
+  <form autocomplete="off" class="col s12" (ngSubmit)="adicionarUsuario()" [formGroup]="formulario">
 
     <div class="input-field col s12 m12">
       <input required name="nome" id="nome" type="text" class="validate" formControlName="nome">
       <label for="nome">Nome</label>
       <span class="helper-text" data-error="Nome inválido"></span>
     </div>
-
 
     <div class="input-field col s12 m12">
       <input required email name="email" id="email" type="email" class="validate" formControlName="email">

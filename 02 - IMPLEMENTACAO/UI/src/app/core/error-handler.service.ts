@@ -11,25 +11,30 @@ export class ErrorHandlerService {
     private toastService: ToastService
   ) { }
 
-  handle(errorResponse: any) {
-    let msg = 'Erro ao processar serviço remoto. Tente novamente';
+  handle(errorResponse: any): void {
+    let mensagem = 'Erro ao processar serviço remoto. Tente novamente';
 
     if (typeof errorResponse === 'string') {
-      msg = errorResponse;
+      mensagem = errorResponse;
     }
 
     if (errorResponse instanceof HttpErrorResponse && errorResponse.status >= 400 && errorResponse.status < 500) {
-      try {
+      const conteudo = errorResponse.error;
 
-        for (const erro of errorResponse.error) {
-          this.toastService.toast(erro.mensagemUsuario);
-        }
+      if (!Array.isArray(conteudo)) {
+        this.toastService.toast(conteudo.mensagemUsuario);
 
         return;
-      } catch (e) { }
+      }
+
+      for (const erro of conteudo) {
+        this.toastService.toast(erro.mensagemUsuario);
+      }
+
+      return;
     }
 
-    this.toastService.toast(msg);
+    this.toastService.toast(mensagem);
   }
 
 }

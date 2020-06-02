@@ -20,22 +20,23 @@ public class UsuarioService {
 	
 	@Transactional
 	public Usuario adicionar(Usuario usuario) {
+		configurarUsuario(usuario);
 		usuario.setCodigo(null);
 		usuario.setAtivo(true);
 		
-		validarUsuario(usuario);
-		
-		usuario.setNome(usuario.getNome().toLowerCase().trim());
-		usuario.setEmail(usuario.getEmail().toLowerCase().trim());
+		validarNovoUsuario(usuario);
 		
 		return usuarioRepository.save(usuario);
 	}
 	
 	@Transactional
 	public Usuario atualizar(Long codigo, Usuario usuario) {
+		configurarUsuario(usuario);
+		
+		validarAtualizacaoUsuario(codigo, usuario);
+		
 		Usuario usuarioSalvo = buscarPeloCodigo(codigo);
-		validarAtualizacao(codigo, usuario);
-		BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo", "ativo", "senha");	
+		BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo", "ativo", "senha");
 		
 		return usuarioRepository.save(usuarioSalvo);
 	}
@@ -45,8 +46,13 @@ public class UsuarioService {
 		
 		return usuarioSalvo.orElseThrow( ()-> new UsuarioNaoEncontradoException() );
 	}
+	
+	private void configurarUsuario(Usuario usuario) {
+		usuario.setNome(usuario.getNome().toLowerCase().trim());
+		usuario.setEmail(usuario.getEmail().toLowerCase().trim());
+	}
 
-	private void validarUsuario(Usuario usuario) {
+	private void validarNovoUsuario(Usuario usuario) {
 		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail());
 		
 		if (usuarioEmail != null) {
@@ -54,7 +60,7 @@ public class UsuarioService {
 		}
 	}
 	
-	private void validarAtualizacao(Long codigo, Usuario usuario) {
+	private void validarAtualizacaoUsuario(Long codigo, Usuario usuario) {
 		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail());
 		
 		if (usuarioEmail != null) {

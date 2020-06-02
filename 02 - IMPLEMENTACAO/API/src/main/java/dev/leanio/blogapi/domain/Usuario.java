@@ -1,5 +1,6 @@
 package dev.leanio.blogapi.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,7 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.leanio.blogapi.domain.enumeration.TipoUsuario;
 
 @Entity
-public class Usuario {
+@Table(name = "usuario")
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,6 +112,22 @@ public class Usuario {
 
 	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
+	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override

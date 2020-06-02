@@ -20,6 +20,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import dev.leanio.blogapi.service.exception.EmailJaCadastradoException;
+import dev.leanio.blogapi.service.exception.PostagemComTituloJaCadastradoException;
+import dev.leanio.blogapi.service.exception.PostagemNaoEncontradaException;
 import dev.leanio.blogapi.service.exception.UsuarioNaoEncontradoException;
 
 @ControllerAdvice
@@ -56,6 +58,22 @@ public class BlogExceptionHandler  extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ UsuarioNaoEncontradoException.class })
 	public ResponseEntity<Object> handlerUsuarioNaoEncontradoException(UsuarioNaoEncontradoException ex) {
 		String mensagemUsuario = messageSource.getMessage("usuario.nao-encontrado", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+	}
+	
+	@ExceptionHandler({ PostagemComTituloJaCadastradoException.class })
+	public ResponseEntity<Object> handlerPostagemComTituloJaCadastradoException(PostagemComTituloJaCadastradoException ex) {
+		String mensagemUsuario = messageSource.getMessage("postagem.titulo-ja-cadastrado", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+	}
+	
+	@ExceptionHandler({ PostagemNaoEncontradaException.class })
+	public ResponseEntity<Object> handlerPostagemNaoEncontradaException(PostagemNaoEncontradaException ex) {
+		String mensagemUsuario = messageSource.getMessage("postagem.nao-encontrada", null, LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));

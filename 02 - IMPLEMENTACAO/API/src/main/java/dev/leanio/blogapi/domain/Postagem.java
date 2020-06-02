@@ -1,5 +1,6 @@
 package dev.leanio.blogapi.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,13 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Postagem {
+@Table(name = "postagem")
+public class Postagem implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +30,7 @@ public class Postagem {
 	private String titulo;
 	
 	@NotBlank
-	private String descricao;
+	private String corpo;
 	
 	@NotNull
 	private LocalDate dataPublicacao;
@@ -54,12 +59,12 @@ public class Postagem {
 		this.titulo = titulo;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getCorpo() {
+		return corpo;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCorpo(String corpo) {
+		this.corpo = corpo;
 	}
 
 	public LocalDate getDataPublicacao() {
@@ -76,6 +81,14 @@ public class Postagem {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override
