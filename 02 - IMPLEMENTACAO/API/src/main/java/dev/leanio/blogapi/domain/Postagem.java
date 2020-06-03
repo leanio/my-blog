@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "postagem")
 public class Postagem implements Serializable {
@@ -26,16 +29,12 @@ public class Postagem implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@NotBlank
 	private String titulo;
 	
-	@NotBlank
 	private String corpo;
 	
-	@NotNull
 	private LocalDate dataPublicacao;
 	
-	@NotNull
 	@ManyToOne
 	private Usuario usuario;
 
@@ -43,52 +42,15 @@ public class Postagem implements Serializable {
 	@OneToMany(mappedBy = "postagem")
 	private List<Comentario> comentarios;
 	
-	public Long getCodigo() {
-		return codigo;
+	public Postagem() {
+		
 	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
+	
+	public Postagem(String titulo, String corpo, LocalDate dataPublicacao, Usuario usuario) {
 		this.titulo = titulo;
-	}
-
-	public String getCorpo() {
-		return corpo;
-	}
-
-	public void setCorpo(String corpo) {
 		this.corpo = corpo;
-	}
-
-	public LocalDate getDataPublicacao() {
-		return dataPublicacao;
-	}
-
-	public void setDataPublicacao(LocalDate dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
 	}
 
 	@Override

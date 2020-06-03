@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.leanio.blogapi.domain.Usuario;
+import dev.leanio.blogapi.dto.usuario.UsuarioInput;
+import dev.leanio.blogapi.dto.usuario.UsuarioOutput;
 import dev.leanio.blogapi.service.UsuarioService;
 
 @RestController
@@ -26,21 +28,21 @@ public class UsuarioResource {
 	private UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<Usuario> adicionar(@Valid @RequestBody Usuario usuario) {
-		Usuario usuarioSalvo = usuarioService.adicionar(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
+	public ResponseEntity<UsuarioOutput> adicionar(@Valid @RequestBody UsuarioInput usuario) {
+		Usuario usuarioSalvo = usuarioService.adicionar(usuario.paraUsuario());
+		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioOutput.paraUsuarioOutput(usuarioSalvo));
 	}
 	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Usuario> atualizar(@PathVariable Long codigo, @Valid @RequestBody Usuario usuario) {
-		Usuario usuarioSalvo = usuarioService.atualizar(codigo, usuario);
-		return ResponseEntity.status(HttpStatus.OK).body(usuarioSalvo);
+	public ResponseEntity<UsuarioOutput> atualizar(@PathVariable Long codigo, @Valid @RequestBody UsuarioInput usuario) {
+		Usuario usuarioSalvo = usuarioService.atualizar(codigo, usuario.paraUsuario());
+		return ResponseEntity.status(HttpStatus.OK).body(UsuarioOutput.paraUsuarioOutput(usuarioSalvo));
 	}
 	
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Usuario> buscarPeloCodigo(@PathVariable Long codigo) {
+	public ResponseEntity<UsuarioOutput> buscarPeloCodigo(@PathVariable Long codigo) {
 		Usuario usuarioSalvo = usuarioService.buscarPeloCodigo(codigo);
-		return ResponseEntity.status(HttpStatus.OK).body(usuarioSalvo);
+		return ResponseEntity.status(HttpStatus.OK).body(UsuarioOutput.paraUsuarioOutput(usuarioSalvo));
 	}
 	
 	@DeleteMapping("/{codigo}")

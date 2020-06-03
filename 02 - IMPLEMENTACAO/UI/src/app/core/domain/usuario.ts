@@ -1,8 +1,9 @@
+import { TipoUsuario } from './tipo-usuario';
+
 export class Usuario {
-  codigo: number;
   nome: string;
   email: string;
   senha: string;
-  ativo = 'true';
-  tipo = 'LEITOR';
+  ativo = true;
+  tipo = TipoUsuario.LEITOR;
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.leanio.blogapi.domain.Postagem;
+import dev.leanio.blogapi.dto.postagem.PostagemInput;
+import dev.leanio.blogapi.dto.postagem.PostagemOutput;
 import dev.leanio.blogapi.service.PostagemService;
 
 @RestController
@@ -26,21 +28,21 @@ public class PostagemResource {
 	private PostagemService postagemService;
 	
 	@PostMapping
-	public ResponseEntity<Postagem> adicionar(@Valid @RequestBody Postagem postagem) {
-		Postagem postagemSalva = postagemService.adicionar(postagem);
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemSalva);
+	public ResponseEntity<PostagemOutput> adicionar(@Valid @RequestBody PostagemInput postagem) {
+		Postagem postagemSalva = postagemService.adicionar(postagem.paraPostagem());
+		return ResponseEntity.status(HttpStatus.CREATED).body(PostagemOutput.paraPostagemOutput(postagemSalva));
 	}
 	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Postagem> atualizar(@PathVariable Long codigo, @Valid @RequestBody Postagem postagem) {
-		Postagem postagemSalva = postagemService.atualizar(codigo, postagem);
-		return ResponseEntity.status(HttpStatus.OK).body(postagemSalva);
+	public ResponseEntity<PostagemOutput> atualizar(@PathVariable Long codigo, @Valid @RequestBody PostagemInput postagem) {
+		Postagem postagemSalva = postagemService.atualizar(codigo, postagem.paraPostagem());
+		return ResponseEntity.status(HttpStatus.OK).body(PostagemOutput.paraPostagemOutput(postagemSalva));
 	}
 	
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Postagem> buscarPeloCodigo(@PathVariable Long codigo) {
+	public ResponseEntity<PostagemOutput> buscarPeloCodigo(@PathVariable Long codigo) {
 		Postagem postagemSalva = postagemService.buscarPeloCodigo(codigo);
-		return ResponseEntity.status(HttpStatus.OK).body(postagemSalva);
+		return ResponseEntity.status(HttpStatus.OK).body(PostagemOutput.paraPostagemOutput(postagemSalva));
 	}
 	
 	@DeleteMapping("/{codigo}")

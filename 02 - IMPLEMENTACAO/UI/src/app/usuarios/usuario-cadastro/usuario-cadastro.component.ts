@@ -31,7 +31,6 @@ export class UsuarioCadastroComponent implements OnInit {
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
-      codigo: [],
       nome: [null, Validators.required],
       email: [null, Validators.email],
       senha: [null, Validators.minLength(5)],
