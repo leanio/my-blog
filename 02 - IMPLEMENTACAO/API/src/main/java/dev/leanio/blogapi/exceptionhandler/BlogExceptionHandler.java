@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import dev.leanio.blogapi.dto.exception.ConfirmacaoDaSenhaIncorretaException;
 import dev.leanio.blogapi.service.exception.EmailJaCadastradoException;
 import dev.leanio.blogapi.service.exception.PostagemComTituloJaCadastradoException;
 import dev.leanio.blogapi.service.exception.PostagemNaoEncontradaException;
@@ -79,6 +80,14 @@ public class BlogExceptionHandler  extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 	}
 	
+	@ExceptionHandler({ ConfirmacaoDaSenhaIncorretaException.class })
+	public ResponseEntity<Object> handlerConfirmacaoDeSenhaIncorretaException(ConfirmacaoDaSenhaIncorretaException ex) {
+		String mensagemUsuario = messageSource.getMessage("usuario.confirmacao-da-senha-incorreta", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+	}
+	
 	private List<Erro> criarListaDeErros(BindingResult bindingResult) {
 		List<Erro> erros = new ArrayList<>();
 
@@ -109,5 +118,7 @@ public class BlogExceptionHandler  extends ResponseEntityExceptionHandler {
 		public String getMensagemDesenvolvedor() {
 			return mensagemDesenvolvedor;
 		}
+		
 	}
+	
 }

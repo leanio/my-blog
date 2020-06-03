@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.component';
 
 const routes: Routes = [
-  {path: 'usuarios/cadastro', component: UsuarioCadastroComponent}
+  {path: 'cadastro', component: UsuarioCadastroComponent},
+  {path: ':codigo', component: UsuarioCadastroComponent}
 ];
 
 @NgModule({

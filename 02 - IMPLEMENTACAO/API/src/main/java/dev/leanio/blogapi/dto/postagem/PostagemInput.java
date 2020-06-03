@@ -31,4 +31,5 @@ public class PostagemInput {
 	public Postagem paraPostagem() {
 		return new Postagem(titulo, corpo, dataPublicacao, usuario);
 	}
+	
 }

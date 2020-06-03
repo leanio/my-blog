@@ -65,14 +65,10 @@ public class PostagemService {
 		Postagem postagemTitulo = postagemRepository.findByTitulo(postagem.getTitulo());
 		
 		if (postagemTitulo != null) {
-			if (!isAMesmaPostagem(codigo, postagemTitulo)) {
+			if (!postagemTitulo.equals(codigo)) {
 				throw new PostagemComTituloJaCadastradoException();
 			}
 		}
-	}
-	
-	private boolean isAMesmaPostagem(Long codigo, Postagem postagem) {
-		return codigo.equals(postagem.getCodigo());
 	}
 
 }

@@ -1,18 +1,15 @@
 package dev.leanio.blogapi.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,38 +17,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "postagem")
-public class Postagem implements Serializable {
+@Table(name = "grupo")
+public class Grupo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	private String titulo;
+	@NotBlank
+	private String nome;
 	
-	private String corpo;
-	
-	private LocalDate dataPublicacao;
-	
-	@ManyToOne
-	private Usuario usuario;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "postagem")
-	private List<Comentario> comentarios;
-	
-	public Postagem() {
-		
-	}
-	
-	public Postagem(String titulo, String corpo, LocalDate dataPublicacao, Usuario usuario) {
-		this.titulo = titulo;
-		this.corpo = corpo;
-		this.dataPublicacao = dataPublicacao;
-		this.usuario = usuario;
-	}
+	@ManyToMany
+	private List<Permissao> permissoes;
 
 	@Override
 	public int hashCode() {
@@ -60,11 +39,7 @@ public class Postagem implements Serializable {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
-	
-	public boolean equals(Long codigo) {
-		return this.codigo == codigo;
-	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -73,7 +48,7 @@ public class Postagem implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Postagem other = (Postagem) obj;
+		Grupo other = (Grupo) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -81,5 +56,5 @@ public class Postagem implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }

@@ -3,8 +3,8 @@ package dev.leanio.blogapi.dto.usuario;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import dev.leanio.blogapi.domain.Grupo;
 import dev.leanio.blogapi.domain.Usuario;
-import dev.leanio.blogapi.domain.enumeration.TipoUsuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,17 +18,20 @@ public class UsuarioOutput {
 
 	private String nome;
 	
-	private TipoUsuario tipo;
+	private Boolean ativo;
+	
+	private Grupo grupo;
 
-	public UsuarioOutput(Long codigo, String email, String nome, TipoUsuario tipo) {
+	public UsuarioOutput(Long codigo, String email, String nome, Boolean ativo, Grupo grupo) {
 		this.codigo = codigo;
 		this.email = email;
 		this.nome = nome;
-		this.tipo = tipo;
+		this.grupo = grupo;
+		this.ativo = ativo;
 	}
 	
 	public static UsuarioOutput paraUsuarioOutput(Usuario usuario) {
-		return new UsuarioOutput(usuario.getCodigo(), usuario.getEmail(), usuario.getNome(), usuario.getTipo());
+		return new UsuarioOutput(usuario.getCodigo(), usuario.getEmail(), usuario.getNome(), usuario.getAtivo(), usuario.getGrupo());
 	}
 	
 	public static List<UsuarioOutput> paraUsuarioOutput(List<Usuario> usuarios) {

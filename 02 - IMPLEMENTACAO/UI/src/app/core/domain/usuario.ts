@@ -1,9 +1,21 @@
 import { TipoUsuario } from './tipo-usuario';
 
-export class Usuario {
-  nome: string;
+export class UsuarioNewInput {
   email: string;
   senha: string;
+  nome: string;
   ativo = true;
-  tipo = TipoUsuario.LEITOR;
+}
+
+export class UsuarioUpdateInput {
+  email: string;
+  nome: string;
+}
+
+export class UsuarioOutput {
+  codigo: number;
+  email: string;
+  nome: string;
+  ativo: boolean;
+  grupo: any;
 }

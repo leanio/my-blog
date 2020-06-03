@@ -64,14 +64,10 @@ public class UsuarioService {
 		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail());
 		
 		if (usuarioEmail != null) {
-			if (!isOMesmoUsuario(codigo, usuarioEmail)) {
+			if (!usuarioEmail.equals(codigo)) {
 				throw new EmailJaCadastradoException();
 			}
 		}
-	}
-	
-	private boolean isOMesmoUsuario(Long codigo, Usuario usuario) {
-		return codigo.equals(usuario.getCodigo());
 	}
 
 }

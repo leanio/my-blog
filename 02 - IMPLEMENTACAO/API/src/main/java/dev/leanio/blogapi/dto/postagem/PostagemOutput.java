@@ -23,7 +23,6 @@ public class PostagemOutput {
 	private String autor;
 	
 	public PostagemOutput(Long codigo, String titulo, String corpo, LocalDate dataPublicacao, String autor) {
-		super();
 		this.codigo = codigo;
 		this.titulo = titulo;
 		this.corpo = corpo;

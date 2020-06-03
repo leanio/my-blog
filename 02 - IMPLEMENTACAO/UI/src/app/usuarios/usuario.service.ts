@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Usuario } from '../core/domain/Usuario';
+import { UsuarioNewInput, UsuarioUpdateInput, UsuarioOutput } from '../core/domain/Usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,22 @@ export class UsuarioService {
     private httpClient: HttpClient
   ) { }
 
-  async adicionar(usuario: Usuario): Promise<Usuario> {
+  async adicionar(usuario: UsuarioNewInput): Promise<UsuarioOutput> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
       });
     return this.httpClient.post(this.url, JSON.stringify(usuario), {headers}).toPromise().then();
+  }
+
+  async atualizar(codigo: number, usuario: UsuarioUpdateInput): Promise<UsuarioOutput> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+      });
+    return this.httpClient.put(`${this.url}/${codigo}`, JSON.stringify(usuario), {headers}).toPromise().then();
+  }
+
+  async buscarPeloCodigo(codigo: number): Promise<UsuarioOutput> {
+    return this.httpClient.get(`${this.url}/${codigo}`).toPromise().then();
   }
 
 }

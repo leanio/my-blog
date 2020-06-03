@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.leanio.blogapi.domain.Usuario;
-import dev.leanio.blogapi.dto.usuario.UsuarioInput;
+import dev.leanio.blogapi.dto.usuario.UsuarioNewInput;
 import dev.leanio.blogapi.dto.usuario.UsuarioOutput;
+import dev.leanio.blogapi.dto.usuario.UsuarioUpdateInput;
 import dev.leanio.blogapi.service.UsuarioService;
 
 @RestController
@@ -28,13 +29,13 @@ public class UsuarioResource {
 	private UsuarioService usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<UsuarioOutput> adicionar(@Valid @RequestBody UsuarioInput usuario) {
+	public ResponseEntity<UsuarioOutput> adicionar(@Valid @RequestBody UsuarioNewInput usuario) {
 		Usuario usuarioSalvo = usuarioService.adicionar(usuario.paraUsuario());
 		return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioOutput.paraUsuarioOutput(usuarioSalvo));
 	}
 	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<UsuarioOutput> atualizar(@PathVariable Long codigo, @Valid @RequestBody UsuarioInput usuario) {
+	public ResponseEntity<UsuarioOutput> atualizar(@PathVariable Long codigo, @Valid @RequestBody UsuarioUpdateInput usuario) {
 		Usuario usuarioSalvo = usuarioService.atualizar(codigo, usuario.paraUsuario());
 		return ResponseEntity.status(HttpStatus.OK).body(UsuarioOutput.paraUsuarioOutput(usuarioSalvo));
 	}

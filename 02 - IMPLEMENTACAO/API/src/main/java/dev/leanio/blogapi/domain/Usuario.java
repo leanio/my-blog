@@ -4,18 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import dev.leanio.blogapi.domain.enumeration.TipoUsuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,11 +36,8 @@ public class Usuario implements Serializable {
 	
 	private Boolean ativo;
 	
-	@Enumerated(EnumType.STRING)
-	private TipoUsuario tipo;
-	
-	@ManyToMany
-	private List<Permissao> permissoes;
+	@ManyToOne
+	private Grupo grupo;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
@@ -57,12 +51,16 @@ public class Usuario implements Serializable {
 		
 	}
 
-	public Usuario(String email, String senha, String nome, Boolean ativo, TipoUsuario tipo) {
+	public Usuario(String email, String senha, String nome, Boolean ativo) {
 		this.email = email;
 		this.senha = senha;
 		this.nome = nome;
 		this.ativo = ativo;
-		this.tipo = tipo;
+	}
+	
+	public Usuario(String email, String nome) {
+		this.email = email;
+		this.nome = nome;
 	}
 
 	@Override
@@ -71,6 +69,10 @@ public class Usuario implements Serializable {
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
+	}
+	
+	public boolean equals(Long codigo) {
+		return this.codigo == codigo;
 	}
 
 	@Override
