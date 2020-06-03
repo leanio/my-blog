@@ -4,7 +4,6 @@ export class UsuarioNewInput {
   email: string;
   senha: string;
   nome: string;
-  ativo = true;
 }
 
 export class UsuarioUpdateInput {

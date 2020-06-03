@@ -51,11 +51,10 @@ public class Usuario implements Serializable {
 		
 	}
 
-	public Usuario(String email, String senha, String nome, Boolean ativo) {
+	public Usuario(String email, String senha, String nome) {
 		this.email = email;
 		this.senha = senha;
 		this.nome = nome;
-		this.ativo = ativo;
 	}
 	
 	public Usuario(String email, String nome) {

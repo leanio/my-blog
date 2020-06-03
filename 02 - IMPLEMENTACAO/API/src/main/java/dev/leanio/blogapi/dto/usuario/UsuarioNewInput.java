@@ -2,7 +2,6 @@ package dev.leanio.blogapi.dto.usuario;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import dev.leanio.blogapi.domain.Usuario;
 import dev.leanio.blogapi.dto.exception.ConfirmacaoDaSenhaIncorretaException;
@@ -26,15 +25,12 @@ public class UsuarioNewInput {
 	@NotBlank
 	private String nome;
 	
-	@NotNull
-	private Boolean ativo;
-	
 	public Usuario paraUsuario() {
 		if (!senha.equals(confirmacaoSenha)) {
 			throw new ConfirmacaoDaSenhaIncorretaException();
 		}
 		
-		return new Usuario(email, senha, nome, ativo);
+		return new Usuario(email, senha, nome);
 	}
 	
 }

@@ -52,8 +52,7 @@ export class UsuarioCadastroComponent implements OnInit {
         nome: [null, Validators.required],
         email: [null, Validators.email],
         senha: [null, Validators.minLength(5)],
-        confirmacaoSenha: [null, Validators.required],
-        ativo: [true]
+        confirmacaoSenha: [null, Validators.required]
       }, {
         validators: this.confirmacaoDaSenha
       });
@@ -102,8 +101,8 @@ export class UsuarioCadastroComponent implements OnInit {
       $('#emailLabel').addClass('active');
       this.configurarFormulario();
       delete usuario.codigo;
-      delete usuario.ativo;
       delete usuario.grupo;
+      delete usuario.ativo;
       this.formulario.setValue(usuario);
     });
   }
