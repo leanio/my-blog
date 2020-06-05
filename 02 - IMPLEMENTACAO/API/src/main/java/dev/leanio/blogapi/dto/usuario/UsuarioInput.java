@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioUpdateInput {
+public class UsuarioInput {
 	
 	@Email
 	@NotBlank
@@ -21,5 +21,5 @@ public class UsuarioUpdateInput {
 	public Usuario paraUsuario() {
 		return new Usuario(email, nome);
 	}
-	
+
 }

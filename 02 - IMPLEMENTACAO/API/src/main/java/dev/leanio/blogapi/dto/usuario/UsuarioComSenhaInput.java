@@ -1,6 +1,5 @@
 package dev.leanio.blogapi.dto.usuario;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import dev.leanio.blogapi.domain.Usuario;
@@ -10,11 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioNewInput {
-	
-	@Email
-	@NotBlank
-	private String email;
+public class UsuarioComSenhaInput extends UsuarioInput {
 	
 	@NotBlank
 	private String senha;
@@ -22,15 +17,12 @@ public class UsuarioNewInput {
 	@NotBlank
 	private String confirmacaoSenha;
 	
-	@NotBlank
-	private String nome;
-	
 	public Usuario paraUsuario() {
 		if (!senha.equals(confirmacaoSenha)) {
 			throw new ConfirmacaoDaSenhaIncorretaException();
 		}
 		
-		return new Usuario(email, senha, nome);
+		return new Usuario(getEmail(), senha, getNome());
 	}
 	
 }

@@ -1,14 +1,16 @@
 import { TipoUsuario } from './tipo-usuario';
 
-export class UsuarioNewInput {
+export class UsuarioCodigo {
+  codigo: number;
+}
+
+export class UsuarioInput {
   email: string;
-  senha: string;
   nome: string;
 }
 
-export class UsuarioUpdateInput {
-  email: string;
-  nome: string;
+export class UsuarioComSenhaInput extends UsuarioInput {
+  senha: string;
 }
 
 export class UsuarioOutput {

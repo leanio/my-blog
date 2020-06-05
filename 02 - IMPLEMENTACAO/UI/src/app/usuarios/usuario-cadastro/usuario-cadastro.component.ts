@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioNewInput, UsuarioUpdateInput, UsuarioOutput } from 'src/app/core/domain/Usuario';
 import { UsuarioService } from '../usuario.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/core/toast.service';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 declare var $: any;
 
@@ -29,16 +28,52 @@ export class UsuarioCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.configurarFormulario();
 
-    const codigoUsuario = this.parametro();
-
-    if (codigoUsuario) {
-      this.carregarUsuario(codigoUsuario);
+    if (this.codigoUsuario()) {
+      this.carregarUsuario();
     }
 
   }
 
-  parametro(): number {
+  codigoUsuario(): number {
     return this.activatedRoute.snapshot.params.codigo;
+  }
+
+  salvarUsuario(): void {
+    if (this.isEditando()) {
+      this.atualizarUsuario();
+    } else {
+      this.adicionarUsuario();
+    }
+  }
+
+  adicionarUsuario(): void {
+    this.usuarioService.adicionar(this.formulario.value).then(() => {
+      this.toastServie.toast('Usuário cadastrado com sucesso');
+      this.router.navigateByUrl('/');
+    }).catch(error => this.errorHandlerService.handle(error));
+  }
+
+  atualizarUsuario(): void {
+    this.usuarioService.atualizar(this.codigoUsuario(), this.formulario.value).then(() => {
+      this.toastServie.toast('Usuário atualizado com sucesso');
+      this.router.navigateByUrl('/');
+    }).catch(error => this.errorHandlerService.handle(error));
+  }
+
+  carregarUsuario(): void {
+    this.usuarioService.buscarPeloCodigo(this.codigoUsuario()).then(usuario => {
+      $('#nomeLabel').addClass('active');
+      $('#emailLabel').addClass('active');
+      this.configurarFormulario();
+      delete usuario.codigo;
+      delete usuario.grupo;
+      delete usuario.ativo;
+      this.formulario.setValue(usuario);
+    }).catch(error => this.errorHandlerService.handle(error));
+  }
+
+  isEditando(): boolean {
+    return this.codigoUsuario() !== undefined;
   }
 
   configurarFormulario(): void {
@@ -73,48 +108,10 @@ export class UsuarioCadastroComponent implements OnInit {
     }
   }
 
-  salvarUsuario(): void {
-    if (this.isEditando()) {
-      this.atualizarUsuario();
-    } else {
-      this.adicionarUsuario();
-    }
-  }
-
-  atualizarUsuario(): void {
-    this.usuarioService.atualizar(this.parametro(), this.formulario.value).then(() => {
-      this.toastServie.toast('Usuário atualizado com sucesso');
-      this.router.navigateByUrl('/');
-    }).catch(error => this.errorHandlerService.handle(error));
-  }
-
-  adicionarUsuario(): void {
-    this.usuarioService.adicionar(this.formulario.value).then(() => {
-      this.toastServie.toast('Usuário cadastrado com sucesso');
-      this.router.navigateByUrl('/');
-    }).catch(error => this.errorHandlerService.handle(error));
-  }
-
-  carregarUsuario(codigo: number): void {
-    this.usuarioService.buscarPeloCodigo(codigo).then(usuario => {
-      $('#nomeLabel').addClass('active');
-      $('#emailLabel').addClass('active');
-      this.configurarFormulario();
-      delete usuario.codigo;
-      delete usuario.grupo;
-      delete usuario.ativo;
-      this.formulario.setValue(usuario);
-    });
-  }
-
   formularioParaUsuario(): any {
     const usuario = Object.assign({}, this.formulario.value);
     delete usuario.confirmacaoSenha;
     return usuario;
-  }
-
-  isEditando(): boolean {
-    return this.parametro() !== undefined;
   }
 
 }

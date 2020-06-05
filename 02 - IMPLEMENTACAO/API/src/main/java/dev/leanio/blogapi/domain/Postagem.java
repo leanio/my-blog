@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -33,6 +35,7 @@ public class Postagem implements Serializable {
 	
 	private String corpo;
 	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dataPublicacao;
 	
 	@ManyToOne
@@ -46,10 +49,9 @@ public class Postagem implements Serializable {
 		
 	}
 	
-	public Postagem(String titulo, String corpo, LocalDate dataPublicacao, Usuario usuario) {
+	public Postagem(String titulo, String corpo, Usuario usuario) {
 		this.titulo = titulo;
 		this.corpo = corpo;
-		this.dataPublicacao = dataPublicacao;
 		this.usuario = usuario;
 	}
 

@@ -1,8 +1,5 @@
 package dev.leanio.blogapi.dto.postagem;
 
-import java.time.LocalDate;
-
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -22,14 +19,10 @@ public class PostagemInput {
 	private String corpo;
 	
 	@NotNull
-	private LocalDate dataPublicacao;
-	
-	@NotNull
-	@ManyToOne
 	private Usuario usuario;
 	
 	public Postagem paraPostagem() {
-		return new Postagem(titulo, corpo, dataPublicacao, usuario);
+		return new Postagem(titulo, corpo, usuario);
 	}
 	
 }
