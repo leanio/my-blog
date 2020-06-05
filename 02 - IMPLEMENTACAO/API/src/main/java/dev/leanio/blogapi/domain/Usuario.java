@@ -14,10 +14,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -46,10 +48,6 @@ public class Usuario implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Comentario> comentarios;
-	
-	public Usuario() {
-		
-	}
 
 	public Usuario(String email, String senha, String nome) {
 		this.email = email;

@@ -20,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import dev.leanio.blogapi.dto.exception.ConfirmacaoDaSenhaIncorretaException;
+import dev.leanio.blogapi.service.exception.ComentarioNaoEncontradoException;
 import dev.leanio.blogapi.service.exception.EmailJaCadastradoException;
 import dev.leanio.blogapi.service.exception.PostagemComTituloJaCadastradoException;
 import dev.leanio.blogapi.service.exception.PostagemNaoEncontradaException;
@@ -69,7 +70,7 @@ public class BlogExceptionHandler  extends ResponseEntityExceptionHandler {
 		String mensagemUsuario = messageSource.getMessage("postagem.titulo-ja-cadastrado", null, LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 	}
 	
 	@ExceptionHandler({ PostagemNaoEncontradaException.class })
@@ -83,6 +84,14 @@ public class BlogExceptionHandler  extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ ConfirmacaoDaSenhaIncorretaException.class })
 	public ResponseEntity<Object> handlerConfirmacaoDeSenhaIncorretaException(ConfirmacaoDaSenhaIncorretaException ex) {
 		String mensagemUsuario = messageSource.getMessage("usuario.confirmacao-da-senha-incorreta", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+	}
+	
+	@ExceptionHandler({ ComentarioNaoEncontradoException.class })
+	public ResponseEntity<Object> handlerComentarioNaoEncontradoException(ComentarioNaoEncontradoException ex) {
+		String mensagemUsuario = messageSource.getMessage("comentario.nao-encontrado", null, LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Erro(mensagemUsuario, mensagemDesenvolvedor));

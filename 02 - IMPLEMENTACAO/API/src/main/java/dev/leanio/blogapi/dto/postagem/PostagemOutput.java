@@ -22,16 +22,16 @@ public class PostagemOutput {
 	
 	private String autor;
 	
-	public PostagemOutput(Long codigo, String titulo, String corpo, LocalDate dataPublicacao, String autor) {
-		this.codigo = codigo;
-		this.titulo = titulo;
-		this.corpo = corpo;
-		this.dataPublicacao = dataPublicacao;
-		this.autor = autor;
+	public PostagemOutput(Postagem postagem) {
+		this.codigo = postagem.getCodigo();
+		this.titulo = postagem.getTitulo();
+		this.corpo = postagem.getCorpo();
+		this.dataPublicacao = postagem.getDataPublicacao();
+		this.autor = postagem.getUsuario().getNome();
 	}
 	
 	public static PostagemOutput paraPostagemOutput(Postagem postagem) {
-		return new PostagemOutput(postagem.getCodigo(), postagem.getTitulo(), postagem.getCorpo(), postagem.getDataPublicacao(), postagem.getUsuario().getNome());
+		return new PostagemOutput(postagem);
 	}
 	
 	public static List<PostagemOutput> paraPostagemOutput(List<Postagem> postagens) {

@@ -37,7 +37,7 @@ public class PostagemService {
 		validarAtualizacaoPostagem(codigo, postagem);		
 
 		Postagem postagemSalva = buscarPeloCodigo(codigo);
-		BeanUtils.copyProperties(postagem, postagemSalva, "codigo");
+		BeanUtils.copyProperties(postagem, postagemSalva, "codigo", "dataPublicacao", "usuario");
 		
 		return postagemRepository.save(postagemSalva);
 	}

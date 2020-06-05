@@ -22,16 +22,16 @@ public class UsuarioOutput {
 	
 	private Grupo grupo;
 
-	public UsuarioOutput(Long codigo, String email, String nome, Boolean ativo, Grupo grupo) {
-		this.codigo = codigo;
-		this.email = email;
-		this.nome = nome;
-		this.grupo = grupo;
-		this.ativo = ativo;
+	public UsuarioOutput(Usuario usuario) {
+		this.codigo = usuario.getCodigo();
+		this.email = usuario.getEmail();
+		this.nome = usuario.getNome();
+		this.grupo = usuario.getGrupo();
+		this.ativo = usuario.getAtivo();
 	}
 	
 	public static UsuarioOutput paraUsuarioOutput(Usuario usuario) {
-		return new UsuarioOutput(usuario.getCodigo(), usuario.getEmail(), usuario.getNome(), usuario.getAtivo(), usuario.getGrupo());
+		return new UsuarioOutput(usuario);
 	}
 	
 	public static List<UsuarioOutput> paraUsuarioOutput(List<Usuario> usuarios) {
