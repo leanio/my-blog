@@ -31,7 +31,6 @@ export class UsuarioCadastroComponent implements OnInit {
     if (this.codigoUsuario()) {
       this.carregarUsuario();
     }
-
   }
 
   codigoUsuario(): number {

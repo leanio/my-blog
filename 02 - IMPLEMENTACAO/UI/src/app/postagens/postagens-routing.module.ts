@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PostagemCadastroComponent } from './postagem-cadastro/postagem-cadastro.component';
+import { PostagemFiltroComponent } from './postagem-filtro/postagem-filtro.component';
 
 const routes: Routes = [
   {path: 'cadastro', component: PostagemCadastroComponent},
-  {path: ':codigo', component: PostagemCadastroComponent}
+  {path: ':codigo', component: PostagemCadastroComponent},
+  {path: '', component: PostagemFiltroComponent}
 ];
 
 @NgModule({

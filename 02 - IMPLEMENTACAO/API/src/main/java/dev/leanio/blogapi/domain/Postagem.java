@@ -37,6 +37,7 @@ public class Postagem implements Serializable {
 	
 	private String titulo;
 	
+	@Column(length = Integer.MAX_VALUE)
 	private String corpo;
 	
 	@DateTimeFormat(pattern = "dd-MM-yyyy")

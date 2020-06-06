@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { PostagemCadastroComponent } from './postagem-cadastro/postagem-cadastro.component';
 import { PostagensRoutingModule } from './postagens-routing.module';
+import { PostagemFiltroComponent } from './postagem-filtro/postagem-filtro.component';
 
 @NgModule({
-  declarations: [PostagemCadastroComponent],
+  declarations: [PostagemCadastroComponent, PostagemFiltroComponent],
   imports: [
     CommonModule,
     FormsModule,

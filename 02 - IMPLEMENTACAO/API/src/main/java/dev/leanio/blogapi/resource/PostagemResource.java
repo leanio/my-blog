@@ -3,6 +3,8 @@ package dev.leanio.blogapi.resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.leanio.blogapi.domain.Postagem;
 import dev.leanio.blogapi.dto.postagem.PostagemInput;
 import dev.leanio.blogapi.dto.postagem.PostagemOutput;
+import dev.leanio.blogapi.repository.PostagemRepository;
+import dev.leanio.blogapi.repository.filter.PostagemFilter;
 import dev.leanio.blogapi.service.PostagemService;
 
 @RestController
@@ -26,6 +30,9 @@ public class PostagemResource {
 	
 	@Autowired
 	private PostagemService postagemService;
+	
+	@Autowired
+	private PostagemRepository postagemRepository;
 	
 	@PostMapping
 	public ResponseEntity<PostagemOutput> adicionar(@Valid @RequestBody PostagemInput postagem) {
@@ -49,6 +56,11 @@ public class PostagemResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long codigo) {
 
+	}
+	
+	@GetMapping
+	public Page<PostagemOutput> filtrar(PostagemFilter postagemFilter, Pageable pageable) {
+		return postagemRepository.filtrar(postagemFilter, pageable);
 	}
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { PostagemInput, PostagemOutput } from '../core/domain/postagem';
+import { PostagemFilter } from '../core/filter/postagem-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,23 @@ export class PostagemService {
     return this.httpCliente.get(`${this.url}/${codigo}`).toPromise().then();
   }
 
+  async filtrar(filter: PostagemFilter): Promise<any> {
+    let params = new HttpParams();
+
+    if (filter.titulo) {
+      params = params.append('titulo', filter.titulo);
+    }
+
+    params = params.append('page', filter.pagina.toString());
+    params = params.append('size', filter.itensPorPagina.toString());
+
+    return this.httpCliente.get(this.url, {params}).toPromise<any>().then(response => {
+      const dados = {
+        postagens: response.content,
+        totalPaginas: response.totalPages
+      };
+
+      return dados;
+    });
+  }
 }

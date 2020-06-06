@@ -1,20 +1,25 @@
-<div class="col s12 m12 center" style="padding-bottom: 50px;">
+<div class="row card" style="padding: 10px; border-radius: 20px;">
   <h1 class="center">{{isEditando() ? 'Atualização de' : 'Nova'}} Postagem</h1>
 
   <form #formularioPostagem="ngForm" autocomplete="off" class="col s12 m12" (ngSubmit)="salvarPostagem()">
 
     <div class="input-field">
-      <input id="titulo" name="titulo" id="titulo" type="text" class="validate" [(ngModel)]="postagem.titulo">
-      <label id="tituloLabel" required for="titulo">Título</label>
+      <input required id="titulo" name="titulo" id="titulo" type="text" class="validate" [(ngModel)]="postagem.titulo">
+      <label id="tituloLabel" for="titulo">Título</label>
     </div>
     <div class="input-field">
-      <textarea id="corpo" name="corpo" required id="corpo" class="materialize-textarea" data-length="254" style="height: 200px;" [(ngModel)]="postagem.corpo"></textarea>
+      <textarea required id="corpo" name="corpo" id="corpo" class="materialize-textarea" data-length="254"
+        style="height: 200px;" [(ngModel)]="postagem.corpo"></textarea>
       <label id="corpoLabel" for="corpo">Texto</label>
     </div>
 
-    <button [disabled]="formularioPostagem.invalid" class="waves-effect waves-light btn-large" type="submit" name="action">Postar
+    <div class="center">
+      <button [disabled]="formularioPostagem.invalid" class="waves-effect waves-light btn-large" type="submit"
+        name="action">Postar
         <i class="material-icons right">send</i>
-    </button>
+      </button>
+    </div>
+
   </form>
 
 </div>
