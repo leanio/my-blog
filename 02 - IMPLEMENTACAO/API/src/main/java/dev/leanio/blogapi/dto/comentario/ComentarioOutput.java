@@ -14,10 +14,13 @@ public class ComentarioOutput {
 	private Long codigo;
 	
 	private String texto;
+	
+	private String autor;
 
 	public ComentarioOutput(Comentario comentario) {
 		this.codigo = comentario.getCodigo();
 		this.texto = comentario.getTexto();
+		this.autor = comentario.getUsuario().getNome();
 	}
 	
 	public static ComentarioOutput paraComentarioOutput(Comentario comentario) {

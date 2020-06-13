@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostagemService } from '../postagem.service';
 import { PostagemFilter } from 'src/app/core/filter/postagem-filter';
 import { PostagemOutput } from 'src/app/core/domain/postagem';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-postagem-filtro',
@@ -16,20 +17,19 @@ export class PostagemFiltroComponent implements OnInit {
   filtro = new PostagemFilter();
 
   constructor(
-    private postagemService: PostagemService
+    private postagemService: PostagemService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
     this.filtrar();
   }
 
-  filtrar() {
-    console.log('aaaaaaaaaaaaaaaaaaaa');
-
+  filtrar(): void {
     this.postagemService.filtrar(this.filtro).then(dados => {
       this.postagens = dados.postagens;
       this.totalPaginas = dados.totalPaginas;
-    });
+    }).catch(erro => this.errorHandlerService.handle(erro));
   }
 
 }

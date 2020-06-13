@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-content black-text">
+    <h4>Comentar</h4>
+
+    <form #formularioComentario="ngForm" autocomplete="off" (ngSubmit)="adicionarComentario()">
+      <div class="input-field">
+        <textarea required id="texto" name="texto" id="texto" class="materialize-textarea" data-length="254"
+          style="height: 100px;" [(ngModel)]="comentario.texto"></textarea>
+        <label id="textoLabel" for="texto">Texto</label>
+      </div>
+
+      <div class="center">
+        <button [disabled]="formularioComentario.invalid" class="waves-effect waves-light btn-large" type="submit"
+          name="action">Enviar
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

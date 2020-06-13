@@ -1,5 +1,9 @@
 import { UsuarioCodigo } from './Usuario';
 
+export class PostagemCodigo {
+  codigo: number;
+}
+
 export class PostagemInput {
   titulo: string;
   corpo: string;

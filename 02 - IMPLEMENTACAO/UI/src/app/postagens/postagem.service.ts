@@ -27,7 +27,7 @@ export class PostagemService {
     return this.httpCliente.get(`${this.url}/${codigo}`).toPromise().then();
   }
 
-  async filtrar(filter: PostagemFilter): Promise<any> {
+  async filtrar(filter: PostagemFilter): Promise<{postagens: PostagemOutput[], totalPaginas: number}> {
     let params = new HttpParams();
 
     if (filter.titulo) {
