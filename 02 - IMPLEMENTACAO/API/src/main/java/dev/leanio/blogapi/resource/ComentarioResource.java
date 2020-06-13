@@ -3,6 +3,8 @@ package dev.leanio.blogapi.resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.leanio.blogapi.domain.Comentario;
 import dev.leanio.blogapi.dto.comentario.ComentarioInput;
 import dev.leanio.blogapi.dto.comentario.ComentarioOutput;
+import dev.leanio.blogapi.dto.postagem.PostagemOutput;
+import dev.leanio.blogapi.repository.ComentarioRepository;
+import dev.leanio.blogapi.repository.filter.ComentarioFilter;
+import dev.leanio.blogapi.repository.filter.PostagemFilter;
 import dev.leanio.blogapi.service.ComentarioService;
 
 @RestController
@@ -24,6 +30,9 @@ public class ComentarioResource {
 	
 	@Autowired
 	private ComentarioService comentarioService;
+	
+	@Autowired
+	private ComentarioRepository comentarioRepository;
 
 	@PostMapping
 	public ResponseEntity<ComentarioOutput> adicionar(@Valid @RequestBody ComentarioInput comentario) {
@@ -41,5 +50,10 @@ public class ComentarioResource {
 	public ResponseEntity<ComentarioOutput> buscarPeloCodigo(@PathVariable Long codigo) {
 		Comentario comentarioSalvo = comentarioService.buscarPeloCodigo(codigo);
 		return ResponseEntity.status(HttpStatus.OK).body(ComentarioOutput.paraComentarioOutput(comentarioSalvo));
+	}
+	
+	@GetMapping
+	public Page<ComentarioOutput> filtrar(ComentarioFilter comentarioFilter, Pageable pageable) {
+		return comentarioRepository.filtrar(comentarioFilter, pageable);
 	}
 }
