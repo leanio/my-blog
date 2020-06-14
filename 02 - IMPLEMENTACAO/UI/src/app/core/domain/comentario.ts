@@ -10,5 +10,6 @@ export class ComentarioInput {
 export class ComentarioOutput {
   codigo: number;
   texto: string;
+  dataPublicacao: Date;
   autor: string;
 }

@@ -14,7 +14,7 @@ export class PostagemFiltroComponent implements OnInit {
   postagens: PostagemOutput[] = [];
   totalPaginas = 0;
 
-  filtro = new PostagemFilter();
+  filter = new PostagemFilter();
 
   constructor(
     private postagemService: PostagemService,
@@ -26,7 +26,7 @@ export class PostagemFiltroComponent implements OnInit {
   }
 
   filtrar(): void {
-    this.postagemService.filtrar(this.filtro).then(dados => {
+    this.postagemService.filtrar(this.filter).then(dados => {
       this.postagens = dados.postagens;
       this.totalPaginas = dados.totalPaginas;
     }).catch(erro => this.errorHandlerService.handle(erro));

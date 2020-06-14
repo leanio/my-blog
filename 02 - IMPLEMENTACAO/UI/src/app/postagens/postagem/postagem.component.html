@@ -13,6 +13,7 @@
     </div>
   </div>
   <div class="col s12 m12">
-    <app-comentario-cadastro [codigoPostagem]="codigoPostagem()"></app-comentario-cadastro>
+    <app-comentario-cadastro (comentarioAdicionado)="abc.filtrar()" [codigoPostagem]="codigoPostagem()"></app-comentario-cadastro>
   </div>
+  <app-comentario-filtro #abc [codigoPostagem]="codigoPostagem()"></app-comentario-filtro>
 </div>

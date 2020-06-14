@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col s12 m12" *ngFor="let comentario of comentarios">
+    <div class="card transparent">
+      <div class="card-content black-text">
+        <blockquote>
+          <span class="card-title" style="font-size: large;">{{comentario.autor | uppercase}}</span>
+        </blockquote>
+        <blockquote>
+          <span>Data de publicação: {{comentario.dataPublicacao | date:"dd/MM/yy"}}</span>
+        </blockquote>
+        <p>{{comentario.texto}}</p>
+      </div>
+    </div>
+  </div>
+</div>

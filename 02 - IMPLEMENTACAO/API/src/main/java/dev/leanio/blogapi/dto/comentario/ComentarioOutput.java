@@ -1,5 +1,6 @@
 package dev.leanio.blogapi.dto.comentario;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,11 +16,14 @@ public class ComentarioOutput {
 	
 	private String texto;
 	
+	private LocalDate dataPublicacao;
+	
 	private String autor;
 
 	public ComentarioOutput(Comentario comentario) {
 		this.codigo = comentario.getCodigo();
 		this.texto = comentario.getTexto();
+		this.dataPublicacao = comentario.getDataPublicacao();
 		this.autor = comentario.getUsuario().getNome();
 	}
 	

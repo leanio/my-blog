@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ComentariosModule } from '../comentarios.module';
 import { ComentarioInput } from 'src/app/core/domain/comentario';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -17,6 +17,8 @@ export class ComentarioCadastroComponent implements OnInit {
 
   @Input() codigoPostagem: number;
 
+  @Output() comentarioAdicionado = new EventEmitter();
+
   constructor(
     private errorHandlerService: ErrorHandlerService,
     private comentarioService: ComentarioService,
@@ -31,6 +33,7 @@ export class ComentarioCadastroComponent implements OnInit {
   adicionarComentario(): void {
     this.comentarioService.adicionar(this.comentario).then(() => {
       this.toastService.toast('Comentario adicionado à postagem');
+      this.comentarioAdicionado.emit(null);
     }).catch(erro => this.errorHandlerService.handle(erro));
   }
 

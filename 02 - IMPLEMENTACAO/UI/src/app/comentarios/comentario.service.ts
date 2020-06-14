@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ComentarioInput, ComentarioOutput } from '../core/domain/comentario';
+import { ComentarioFilter } from '../core/filter/comentario-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,27 @@ export class ComentarioService {
   ) { }
 
   async adicionar(comentario: ComentarioInput): Promise<ComentarioOutput> {
-    console.log(comentario);
-
     return this.httpCliente.post(this.url, comentario).toPromise().then();
+  }
+
+  async filtrar(filter: ComentarioFilter): Promise<{comentarios: ComentarioOutput[], totalPaginas: number}> {
+    let params = new HttpParams();
+
+    if (filter.codigoPostagem) {
+      params = params.append('codigoPostagem', filter.codigoPostagem.toString());
+    }
+
+    params = params.append('page', filter.pagina.toString());
+    params = params.append('size', filter.itensPorPagina.toString());
+
+    return this.httpCliente.get(this.url, {params}).toPromise<any>().then(response => {
+      const dados = {
+        comentarios: response.content,
+        totalPaginas: response.totalPages
+      };
+
+      return dados;
+    });
   }
 
 }
