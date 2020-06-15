@@ -53,15 +53,11 @@ public class UsuarioService {
 	}
 
 	private void validarNovoUsuario(Usuario usuario) {
-		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail());
-		
-		if (usuarioEmail != null) {
-			throw new EmailJaCadastradoException();
-		}
+		usuarioRepository.findByEmail(usuario.getEmail()).orElseThrow(()-> new EmailJaCadastradoException());		
 	}
 	
 	private void validarAtualizacaoUsuario(Long codigo, Usuario usuario) {
-		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail());
+		Usuario usuarioEmail = usuarioRepository.findByEmail(usuario.getEmail()).orElse(null);
 		
 		if (usuarioEmail != null) {
 			if (!usuarioEmail.equals(codigo)) {
