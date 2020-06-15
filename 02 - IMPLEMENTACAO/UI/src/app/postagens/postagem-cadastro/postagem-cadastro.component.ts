@@ -4,6 +4,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { ToastService } from 'src/app/core/toast.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PostagemInput } from 'src/app/core/domain/postagem';
+import { OauthService } from 'src/app/seguranca/oauth.service';
 
 declare var $: any;
 
@@ -18,6 +19,7 @@ export class PostagemCadastroComponent implements OnInit {
 
   constructor(
     private postagemService: PostagemService,
+    private oauthService: OauthService,
     private errorHandlerService: ErrorHandlerService,
     private toastServie: ToastService,
     private router: Router,
@@ -31,7 +33,7 @@ export class PostagemCadastroComponent implements OnInit {
       this.carregarPostagem();
     }
 
-    this.postagem.usuario.codigo = this.codigoUsuarioLogadoFake();
+    this.postagem.usuario.codigo = this.oauthService.codigoUsuario();
   }
 
   codigoPostagem(): number {
@@ -62,7 +64,7 @@ export class PostagemCadastroComponent implements OnInit {
 
   carregarPostagem(): void {
     this.postagemService.buscarPeloCodigo(this.codigoPostagem()).then(postagem => {
-      this.postagem = {titulo: postagem.titulo, corpo: postagem.corpo, usuario: {codigo: this.codigoUsuarioLogadoFake()}};
+      this.postagem = {titulo: postagem.titulo, corpo: postagem.corpo, usuario: {codigo: this.oauthService.codigoUsuario()}};
       $('#tituloLabel').addClass('active');
       $('#corpoLabel').addClass('active');
     }).catch(erro => this.errorHandlerService.handle(erro));
@@ -72,7 +74,4 @@ export class PostagemCadastroComponent implements OnInit {
     return this.codigoPostagem() !== undefined;
   }
 
-  codigoUsuarioLogadoFake(): number {
-    return 1;
-  }
 }

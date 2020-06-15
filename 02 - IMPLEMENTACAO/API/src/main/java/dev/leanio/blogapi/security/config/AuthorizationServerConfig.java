@@ -31,8 +31,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.secret("{noop}35854@Sm238$474ds")
 			.scopes("read", "write")
 			.authorizedGrantTypes("password", "refresh_token")
-			.accessTokenValiditySeconds(1800)
-			.refreshTokenValiditySeconds(3600 * 24);
+			.accessTokenValiditySeconds(5 * 60)
+			.refreshTokenValiditySeconds(3600 * 24 * 7);
 	}
 	
 	@Override

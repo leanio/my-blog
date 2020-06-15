@@ -5,6 +5,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PostagemOutput } from 'src/app/core/domain/postagem';
 import { ComentarioService } from '../comentario.service';
 import { ToastService } from 'src/app/core/toast.service';
+import { OauthService } from 'src/app/seguranca/oauth.service';
 
 @Component({
   selector: 'app-comentario-cadastro',
@@ -22,12 +23,13 @@ export class ComentarioCadastroComponent implements OnInit {
   constructor(
     private errorHandlerService: ErrorHandlerService,
     private comentarioService: ComentarioService,
+    private oauthService: OauthService,
     private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
     this.comentario.postagem.codigo = this.codigoPostagem;
-    this.comentario.usuario.codigo = this.codigoUsuarioFake();
+    this.comentario.usuario.codigo = this.oauthService.codigoUsuario();
   }
 
   adicionarComentario(): void {
@@ -35,10 +37,6 @@ export class ComentarioCadastroComponent implements OnInit {
       this.toastService.toast('Comentario adicionado à postagem');
       this.comentarioAdicionado.emit(null);
     }).catch(erro => this.errorHandlerService.handle(erro));
-  }
-
-  codigoUsuarioFake(): number {
-    return 1;
   }
 
 }
