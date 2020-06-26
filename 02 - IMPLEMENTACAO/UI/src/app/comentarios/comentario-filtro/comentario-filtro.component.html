@@ -3,6 +3,9 @@
     <div class="card transparent">
       <div class="card-content black-text">
         <blockquote>
+          <a class="waves-effect waves-light btn right" (click)="remover(comentario.codigo)">
+            <i class="material-icons">delete</i>
+          </a>
           <span class="card-title" style="font-size: large;">{{comentario.autor | uppercase}}</span>
         </blockquote>
         <blockquote>

@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from './toast.service';
+import { toast } from 'materialize-css';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,17 @@ export class ErrorHandlerService {
       mensagem = errorResponse;
     }
 
+    if (errorResponse.status === 403) {
+      this.toastService.toast(errorResponse.error.error_description);
+      return;
+    }
+
+
     if (errorResponse instanceof HttpErrorResponse && errorResponse.status >= 400 && errorResponse.status < 500) {
       const conteudo = errorResponse.error;
 
       if (!Array.isArray(conteudo)) {
         this.toastService.toast(conteudo.mensagemUsuario);
-
         return;
       }
 

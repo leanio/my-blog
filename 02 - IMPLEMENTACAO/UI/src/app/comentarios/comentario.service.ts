@@ -18,6 +18,10 @@ export class ComentarioService {
     return this.httpCliente.post(this.url, comentario).toPromise().then();
   }
 
+  async remover(codigo: number): Promise<void> {
+    return this.httpCliente.delete(`${this.url}/${codigo}`).toPromise().then(() => null);
+  }
+
   async filtrar(filter: ComentarioFilter): Promise<{comentarios: ComentarioOutput[], totalPaginas: number}> {
     let params = new HttpParams();
 

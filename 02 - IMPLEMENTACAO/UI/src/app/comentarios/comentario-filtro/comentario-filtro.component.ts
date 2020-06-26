@@ -29,6 +29,14 @@ export class ComentarioFiltroComponent implements OnInit {
     this.filtrar();
   }
 
+  remover(codigo: number): void {
+    console.log(codigo);
+
+    this.comentarioService.remover(codigo).then(() => {
+
+    }).catch(erro => this.errorHandlerService.handle(erro));
+  }
+
   filtrar(): void {
     this.comentarioService.filtrar(this.filter).then(dados => {
       this.comentarios = dados.comentarios;
